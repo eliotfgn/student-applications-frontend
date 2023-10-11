@@ -10,7 +10,10 @@ function Applications(): React.JSX.Element {
 
         <section className={'mt-12'}>
             <h2 className={'text-3xl font-bold text-emerald-600'}>My Applications</h2>
-            
+
+            <div className={'my-10'}>
+
+            </div>
         </section>
     </>;
 }
