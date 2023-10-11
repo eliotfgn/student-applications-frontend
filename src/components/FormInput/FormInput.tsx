@@ -1,9 +1,9 @@
 import React, { HTMLProps } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 
 interface FormInputProps extends HTMLProps<HTMLInputElement> {
     name: string;
-    register: UseFormRegister<FieldValues>;
+    register: UseFormRegister<any>;
     icon?: React.JSX.Element;
 }
 
