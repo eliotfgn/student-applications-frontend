@@ -1,5 +1,5 @@
-import {HTMLProps} from "react";
-import cn from "../../utils/cn.ts";
+import { HTMLProps } from 'react';
+import cn from '../../utils/cn.ts';
 
 interface ButtonProps extends HTMLProps<HTMLButtonElement> {
     children: React.ReactNode;
