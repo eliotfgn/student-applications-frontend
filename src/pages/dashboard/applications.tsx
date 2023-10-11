@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../components/Button/Button.tsx';
+import NewApplicationModal from '../../components/Application/NewApplicationModal.tsx';
 
 function Applications(): React.JSX.Element {
+    const [modalOpened, setModalOpened] = useState<boolean>(false);
+
+    const handleModal = () => {
+        setModalOpened(!modalOpened);
+    };
+
     return <>
         <header className={'w-full flex items-center justify-between'}>
             <h3 className={'text-2xl text-emerald-600 font-medium'}>Hi, Eliot !</h3>
-            <Button>New application</Button>
+            <Button onClick={handleModal}>New application</Button>
         </header>
 
         <section className={'mt-12'}>
@@ -15,6 +22,8 @@ function Applications(): React.JSX.Element {
 
             </div>
         </section>
+
+        <NewApplicationModal isOpen={modalOpened} setIsOpen={setModalOpened} />
     </>;
 }
 
