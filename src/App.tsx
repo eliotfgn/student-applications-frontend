@@ -5,6 +5,7 @@ import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/Register.tsx";
 import Applications from "./pages/dashboard/applications.tsx";
 import DashboardLayout from "./layouts/DashboardLayout.tsx";
+import ProfilePage from "./pages/dashboard/ProfilePage.tsx";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         </Route>
           <Route path={'/'} element={<DashboardLayout/>}>
               <Route path={'applications'} element={<Applications/>}/>
+              <Route path={'profile'} element={<ProfilePage/>}/>
           </Route>
       </Routes>
     </BrowserRouter>
