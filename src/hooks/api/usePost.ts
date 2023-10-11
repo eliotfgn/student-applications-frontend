@@ -21,7 +21,7 @@ export const usePost = () => {
     const post = async (options: PostOptions): Promise<PostResponse> => {
         try {
             setIsLoading(true);
-            const resp = await fetch(BASE_URL + options.url, {
+            const resp: Response = await fetch(BASE_URL + options.url, {
                 method: 'POST',
                 headers: { ...options.headers, 'Content-Type': 'application/json' },
                 body: JSON.stringify(options.data),

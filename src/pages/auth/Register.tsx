@@ -2,7 +2,8 @@ import React from 'react';
 import FormInput from '../../components/FormInput/FormInput.tsx';
 import Button from '../../components/Button/Button.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { usePost } from '../../hooks/api/usePost.ts';
 
 interface CreateUser {
     firstname: string;
@@ -13,6 +14,9 @@ interface CreateUser {
 
 function Register(): React.JSX.Element {
     //const [showPassword, setShowPassword] = useState<boolean>(false);
+    const navigate = useNavigate();
+
+    const { post, response, isLoading } = usePost();
 
     const {
         register,
@@ -20,7 +24,12 @@ function Register(): React.JSX.Element {
     } = useForm<CreateUser>();
 
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
-        console.log(data);
+        post({ url: '/auth/register', data: data });
+
+        if (response?.data.data.success) {
+            localStorage.setItem('token', response.data.data.token);
+            navigate('/applications');
+        }
     };
 
     return (
@@ -42,7 +51,7 @@ function Register(): React.JSX.Element {
                             }} />}*/
                         />
 
-                        <Button className={'my-5'}>Sign in</Button>
+                        <Button className={'my-5'}>{isLoading ? 'Loading' : 'Sign in'}</Button>
                     </form>
                 </div>
             </div>
