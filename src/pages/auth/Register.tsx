@@ -27,9 +27,9 @@ function Register(): React.JSX.Element {
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
         post({ url: '/auth/register', data: data });
 
-        if (response?.data.data.success) {
-            localStorage.setItem('token', response.data.data.token);
+        if (response?.data.success) {
             navigate('/applications');
+            localStorage.setItem('token', response.data.data.token);
         }
     };
 
@@ -52,7 +52,7 @@ function Register(): React.JSX.Element {
                             }} />}*/
                         />
 
-                        <Button className={'my-5'}>{isLoading ? <Loader /> : 'Sign in'}</Button>
+                        <Button className={'my-5'}>{isLoading ? <Loader /> : 'Sign up'}</Button>
                     </form>
                 </div>
             </div>

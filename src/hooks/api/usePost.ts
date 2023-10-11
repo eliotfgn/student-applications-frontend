@@ -15,7 +15,7 @@ const BASE_URL: string = 'http://localhost:8181/api/v1';
 
 export const usePost = () => {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState(null);
+    const [error, setError] = React.useState();
     const [response, setResponse] = React.useState<PostResponse>();
 
     const post = async (options: PostOptions): Promise<PostResponse> => {

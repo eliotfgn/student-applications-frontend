@@ -9,8 +9,8 @@ export default function Button(props: ButtonProps): React.JSX.Element {
     return (
         <button
             className={cn(
-                'rounded-full border border-emerald-600 bg-emerald-600 px-8 py-1 text-center font-medium text-white transition transition-colors sm:py-2 lg:text-base',
-                'hover:bg-transparent hover:text-emerald-600',
+                'rounded-full flex items-center justify-center border border-emerald-600 bg-emerald-600 px-8 py-1 text-center font-medium text-white transition transition-colors sm:py-2 lg:text-base',
+                'hover:bg-emerald-500',
                 { 'cursor-not-allowed bg-emerald-200 text-black': props.disabled },
                 props.className,
             )}
