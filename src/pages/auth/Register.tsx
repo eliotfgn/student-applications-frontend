@@ -4,6 +4,7 @@ import Button from '../../components/Button/Button.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePost } from '../../hooks/api/usePost.ts';
+import Loader from '../../components/Loader/Loader.tsx';
 
 interface CreateUser {
     firstname: string;
@@ -51,7 +52,7 @@ function Register(): React.JSX.Element {
                             }} />}*/
                         />
 
-                        <Button className={'my-5'}>{isLoading ? 'Loading' : 'Sign in'}</Button>
+                        <Button className={'my-5'}>{isLoading ? <Loader /> : 'Sign in'}</Button>
                     </form>
                 </div>
             </div>
