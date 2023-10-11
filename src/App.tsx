@@ -16,7 +16,7 @@ function App() {
                     <Route path={'register'} element={<Register />} />
                 </Route>
                 <Route path={'/'} element={<DashboardLayout />}>
-                    <Route path={'applications'} element={<Applications />} />
+                    <Route path={'applications'} element={<Applications />} index />
                     <Route path={'profile'} element={<ProfilePage />} />
                 </Route>
             </Routes>
