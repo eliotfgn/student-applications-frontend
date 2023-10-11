@@ -1,12 +1,47 @@
 import React from 'react';
+import Document from "../icons/Document.tsx";
+import Profile from "../icons/Profile.tsx";
+import cn from "../../utils/cn.ts";
+import {NavLink, useLocation} from "react-router-dom";
+
+interface NavItem {
+    label: string;
+    icon: React.JSX.Element;
+    link: string;
+}
 
 function NavBar(): React.JSX.Element {
+
+    const { pathname }: {pathname: string} = useLocation();
+
+    const items: NavItem[] = [
+        {
+            label: 'Applications',
+            icon: <Document className={`${pathname === '/applications' ? 'fill-emerald-600' : 'fill-white'}`} />,
+            link: '/applications'
+        },
+        {
+            label: 'Profile',
+            icon: <Profile className={`${pathname === '/profile' ? 'fill-emerald-600' : 'fill-white'}`} />,
+            link: '/profile'
+        },
+    ];
+
     return (
-        <div className={'absolute h-screen w-80 bg-emerald-600 py-10'}>
+        <div className={'fixed h-screen w-80 bg-emerald-600 py-10'}>
             <h1 className={'text-2xl text-white font-bold text-center'}>Dashboard</h1>
 
-            <div>
-                <div>
+            <div className={'h-full w-full my-10'}>
+                <div className={'flex flex-col gap-5'}>
+                    {
+                        items.map((item: NavItem, index: number) => (
+                            <NavLink to={item.link} key={index} className={({isActive}) => cn('flex items-center gap-5 px-5 py-3', `${!isActive ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-600'}`)}>
+                                {item.icon}
+                                <h3 className={'text-lg font-medium'}>
+                                    {item.label}
+                                </h3>
+                        </NavLink>))
+                    }
                 </div>
             </div>
         </div>
