@@ -12,7 +12,7 @@ interface GetResponse {
 
 const BASE_URL: string = 'http://localhost:8181/api/v1';
 
-export const useGetFetch = () => {
+export const useGet = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState(null);
     const [response, setResponse] = React.useState<GetResponse | null>(null);
