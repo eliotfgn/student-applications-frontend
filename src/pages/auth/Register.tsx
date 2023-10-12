@@ -19,7 +19,7 @@ function Register(): React.JSX.Element {
     const navigate = useNavigate();
     const authContext = useContext<AuthContextType | undefined>(AuthContext);
 
-    const { post, response, isLoading } = usePost();
+    const { post, isLoading } = usePost();
 
     const { register, handleSubmit } = useForm<CreateUser>();
 
