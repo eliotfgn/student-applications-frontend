@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FormInput from '../../components/FormInput/FormInput.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../../components/Button/Button.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePost } from '../../hooks/api/usePost.ts';
 import Loader from '../../components/Loader/Loader.tsx';
+import { AuthContext, AuthContextType } from '../../contexts/AuthContext.tsx';
 
 interface LoginRequest {
     email: string;
@@ -14,16 +15,16 @@ interface LoginRequest {
 function Login(): React.JSX.Element {
     const navigate = useNavigate();
     const { post, isLoading } = usePost();
+    const authContext = useContext<AuthContextType | undefined>(AuthContext);
 
-    const {
-        register,
-        handleSubmit,
-    } = useForm<LoginRequest>();
+    const { register, handleSubmit } = useForm<LoginRequest>();
 
     const onSubmit: SubmitHandler<LoginRequest> = async (data: LoginRequest) => {
         post({ url: '/auth/login', data: data }).then((response) => {
             if (response.data.success) {
+                console.log(response);
                 localStorage.setItem('token', response.data.data.token);
+                authContext?.login(response.data.data.user, response.data.data.token);
                 navigate('/applications');
             }
         });
@@ -43,9 +44,7 @@ function Login(): React.JSX.Element {
                             type={'password'}
                         />
 
-
-                        <Button className={'my-5'}>{isLoading ?
-                            <Loader /> : 'Sign in'}</Button>
+                        <Button className={'my-5'}>{isLoading ? <Loader /> : 'Sign in'}</Button>
                     </form>
                 </div>
             </div>
