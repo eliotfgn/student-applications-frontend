@@ -39,11 +39,11 @@ function Applications(): React.JSX.Element {
 
                 <div className={'my-10'}>
                     {isLoading && <Loader dark={true} />}
-                    {applications.length < 1 ? (
+                    {!isLoading && applications.length < 1 ? (
                         <p>No application yet.</p>
                     ) : (
                         applications.map((application) => (
-                            <ApplicationItem application={application} />
+                            <ApplicationItem key={application.id} application={application} />
                         ))
                     )}
                 </div>

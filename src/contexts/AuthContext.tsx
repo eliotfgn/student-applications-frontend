@@ -1,5 +1,5 @@
 import User from '../types/models/user';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 export interface Auth {
     user?: User;
@@ -22,6 +22,19 @@ export const AuthContext: React.Context<AuthContextType | undefined> = createCon
 
 export default function AuthProvider({ children }: AuthContextProviderProps) {
     const [auth, setAuth] = useState<Auth>({});
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            const user = JSON.parse(localStorage.getItem('user')!);
+            setAuth((prevAuth) => {
+                prevAuth.token = token;
+                prevAuth.user = user;
+                return prevAuth;
+            });
+        }
+    }, []);
 
     const login = (user: User, token: string) => {
         setAuth({

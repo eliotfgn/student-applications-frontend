@@ -24,6 +24,7 @@ function Login(): React.JSX.Element {
             if (response.data.success) {
                 console.log(response);
                 localStorage.setItem('token', response.data.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.data.user));
                 authContext?.login(response.data.data.user, response.data.data.token);
                 navigate('/applications');
             }
