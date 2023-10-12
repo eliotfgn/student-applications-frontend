@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FormInput from '../../components/FormInput/FormInput.tsx';
 import Button from '../../components/Button/Button.tsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePost } from '../../hooks/api/usePost.ts';
 import Loader from '../../components/Loader/Loader.tsx';
+import { AuthContext, AuthContextType } from '../../contexts/AuthContext.tsx';
 
 interface CreateUser {
     firstname: string;
@@ -16,21 +17,22 @@ interface CreateUser {
 function Register(): React.JSX.Element {
     //const [showPassword, setShowPassword] = useState<boolean>(false);
     const navigate = useNavigate();
+    const authContext = useContext<AuthContextType | undefined>(AuthContext);
 
     const { post, response, isLoading } = usePost();
 
-    const {
-        register,
-        handleSubmit,
-    } = useForm<CreateUser>();
+    const { register, handleSubmit } = useForm<CreateUser>();
 
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
-        post({ url: '/auth/register', data: data });
-
-        if (response?.data.success) {
-            navigate('/applications');
-            localStorage.setItem('token', response.data.data.token);
-        }
+        post({ url: '/auth/register', data: data }).then((response) => {
+            if (response.data.success) {
+                console.log(response);
+                localStorage.setItem('token', response.data.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.data.user));
+                authContext?.login(response.data.data.user, response.data.data.token);
+                navigate('/applications');
+            }
+        });
     };
 
     return (
