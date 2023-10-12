@@ -18,13 +18,17 @@ function Applications(): React.JSX.Element {
         setModalOpened(!modalOpened);
     };
 
-    useEffect(() => {
+    const fetchApplications = () => {
         get({
             url: `/users/${authContext?.auth.user?.id.toString()}/applications`,
             headers: { Authorization: `Bearer ${authContext?.auth.token}` },
         }).then((response) => {
             setApplications(response.data.data);
         });
+    };
+
+    useEffect(() => {
+        fetchApplications();
     }, []);
 
     return (
@@ -37,7 +41,7 @@ function Applications(): React.JSX.Element {
             <section className={'mt-12'}>
                 <h2 className={'text-3xl font-bold text-emerald-600'}>My Applications</h2>
 
-                <div className={'my-10'}>
+                <div className={'my-10 flex flex-col gap-2'}>
                     {isLoading && <Loader dark={true} />}
                     {!isLoading && applications.length < 1 ? (
                         <p>No application yet.</p>
@@ -49,7 +53,11 @@ function Applications(): React.JSX.Element {
                 </div>
             </section>
 
-            <NewApplicationModal isOpen={modalOpened} setIsOpen={setModalOpened} />
+            <NewApplicationModal
+                onClose={fetchApplications}
+                isOpen={modalOpened}
+                setIsOpen={setModalOpened}
+            />
         </>
     );
 }
