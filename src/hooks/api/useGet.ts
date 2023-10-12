@@ -1,34 +1,28 @@
 import React from 'react';
 
-interface PostOptions {
+interface GetOptions {
     url: string;
-    data?: object;
-    headers?: HeadersInit | undefined;
-    token?: string;
+    headers?: HeadersInit;
 }
 
-interface PostResponse {
+interface GetResponse {
     data: any;
     status: number;
 }
 
 const BASE_URL: string = 'http://localhost:8181/api/v1';
 
-export const usePost = () => {
+export const useGetFetch = () => {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState();
-    const [response, setResponse] = React.useState<PostResponse>();
+    const [error, setError] = React.useState(null);
+    const [response, setResponse] = React.useState<GetResponse | null>(null);
 
-    const post = async (options: PostOptions): Promise<PostResponse> => {
+    const get = async (options: GetOptions): Promise<GetResponse> => {
         try {
             setIsLoading(true);
-            const resp: Response = await fetch(BASE_URL + options.url, {
-                method: 'POST',
-                headers: {
-                    ...options.headers,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(options.data),
+            const resp = await fetch(BASE_URL + options.url, {
+                method: 'GET',
+                headers: options.headers,
             });
             const data = await resp.json();
             setResponse({ data, status: resp.status });
@@ -47,6 +41,6 @@ export const usePost = () => {
         isLoading,
         error,
         response,
-        post,
+        get,
     };
 };

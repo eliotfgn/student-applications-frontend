@@ -13,21 +13,20 @@ interface LoginRequest {
 
 function Login(): React.JSX.Element {
     const navigate = useNavigate();
-    const { post, response, isLoading } = usePost();
+    const { post, isLoading } = usePost();
 
     const {
         register,
         handleSubmit,
     } = useForm<LoginRequest>();
 
-    const onSubmit: SubmitHandler<LoginRequest> = (data: LoginRequest) => {
-        post({ url: '/auth/login', data: data });
-
-        console.log(response?.data.data);
-        if (response?.status === 200) {
-            localStorage.setItem('token', response.data.data.token);
-            navigate('/applications');
-        }
+    const onSubmit: SubmitHandler<LoginRequest> = async (data: LoginRequest) => {
+        post({ url: '/auth/login', data: data }).then((response) => {
+            if (response.data.success) {
+                localStorage.setItem('token', response.data.data.token);
+                navigate('/applications');
+            }
+        });
     };
 
     return (
